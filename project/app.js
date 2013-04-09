@@ -7,9 +7,12 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , db = require('mongoose');
 
 var app = express();
+
+db.connect('mongodb://localhost/caps');
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
