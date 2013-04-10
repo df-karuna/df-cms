@@ -6,6 +6,8 @@
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
+  , controlTower = require('./routes/controltower')
+  , auth = require('./routes/auth')
   , http = require('http')
   , path = require('path')
   , db = require('mongoose');
@@ -32,6 +34,13 @@ app.configure('development', function(){
 
 app.get('/', routes.index);
 app.get('/users', user.list);
+
+
+//setting up controlTower default settings.
+app.all('/controlTower(|/*)', auth.checkAuth);
+app.get('/controlTower', controlTower.index);
+app.get('/controlTower/settings', controlTower.settings);
+
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log("Express server listening on port " + app.get('port'));
