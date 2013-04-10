@@ -4,6 +4,7 @@
  */
 
 var express = require('express')
+  , stores = require('connect-mongo')(express)
   , routes = require('./routes')
   , user = require('./routes/user')
   , controlTower = require('./routes/controltower')
@@ -26,14 +27,22 @@ app.configure(function(){
   app.use(express.methodOverride());
   app.use(app.router);
   app.use(express.static(path.join(__dirname, 'public')));
+  app.get('/', routes.index);
+  app.get('/users', user.list);
 });
 
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
-app.get('/users', user.list);
+app.use(express.session({
+	secret: 'noobjs',
+	store: new store({
+		url:'mongodb://localhost/caps',
+		collection:'sessions'
+	});
+});
+
 
 
 //setting up controlTower default settings.

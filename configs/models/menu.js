@@ -26,7 +26,8 @@ var ArticleSchema = new Schema({
 ArticleSchema.path('title').validate(function (title){
 	return title.length > 0
 }, '제목을 입력하세요.');
-ArticleSchema.path('body').validate(function (title){
+ArticleSchema.path('body').validate(function (body){
+	return body.length > 0
 }, '내용을 입력하세요.');
 
 
