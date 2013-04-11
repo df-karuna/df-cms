@@ -1,25 +1,32 @@
+/**
+ * Environment
+ */
 
 /**
  * Module dependencies.
  */
-
 var express = require('express')
   , stores = require('connect-mongo')(express)
-  , routes = require('./routes')
-  , user = require('./routes/user')
-  , controlTower = require('./routes/controltower')
-  , auth = require('./routes/auth')
   , http = require('http')
   , path = require('path')
   , db = require('mongoose');
 
+// Configurations
+
+ var env = process.env.NODE_ENV || 'development'
+  , auth = require('./routes/auth')
+  , routes = require('./routes')
+  , user = require('./routes/user')
+  , controlTower = require('./routes/controltower')
+  , config = require('./configs/config')[env];
+
 var app = express();
 
-db.connect('mongodb://localhost/caps');
+db.connect(config.db);
 
 app.configure(function(){
   app.set('port', process.env.PORT || 3000);
-  app.set('views', __dirname + '/views');
+  app.set('views', __dirname + '/mvc/views');
   app.set('view engine', 'jade');
   app.use(express.favicon());
   app.use(express.logger('dev'));
@@ -34,19 +41,17 @@ app.configure(function(){
 app.configure('development', function(){
   app.use(express.errorHandler());
 });
-
+/*
 app.use(express.session({
-	secret: 'noobjs',
-	store: new store({
-		url:'mongodb://localhost/caps',
-		collection:'sessions'
-	});
-});
+		//secret: 'noobjs',
+		store: new stores({
+			url:config.db,
+			collection:'sessions'
+		})
+	})
+);*/
 
-
-
-//setting up controlTower default settings.
-app.all('/controlTower(|/*)', auth.checkAuth);
+//setting up controlTower default setting
 app.get('/controlTower', controlTower.index);
 app.get('/controlTower/settings', controlTower.settings);
 
