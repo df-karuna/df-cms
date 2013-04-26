@@ -1,5 +1,6 @@
 {
-  "name": "CMS Project name DesertFox",
+  "name": "df_cms",
+  "description":"CMS Project name DesertFox",
   "version": "0.0.2",
   "private": true,
   "scripts": {

@@ -38,17 +38,17 @@ app.get('/users', user.list);
 
 
 /* Loading default plugin named "controltower" */
-var file = fs.readFileSync('./plugins/controlTower/info.json', 'utf8');
-var moduleInfo = JSON.parse(file);
+var pluginInfo = JSON.parse( fs.readFileSync('./plugins/controlTower/info.json', 'utf8') );
 
-moduleName = moduleInfo['name'];
-console.log(  "loading module .. var "+moduleName+" = require('./plugins/"+moduleName+"/c/controller');" );
-eval("var "+moduleName+" = require('./plugins/controlTower/c/controller');");
+var pluginName = pluginInfo['name'];
+var pluginDir = './plugins/' + pluginInfo['directory'];
+console.log(  "Loading plugin ... "+pluginName+" = require('"+pluginDir+"/"+ (pluginInfo['controller']||"c/controller")+"');" );
+eval("var "+pluginName+" = require('"+pluginDir+"/"+ (pluginInfo['controller']||"c/controller")+"');");
 
-var verbs = moduleInfo['verbs'];
+var verbs = pluginInfo['verbs'];
 for(m in verbs){
-	console.log( "Loading verbs ... app."+verbs[m].method+"('"+verbs[m].route+"', "+moduleName+"."+verbs[m].action+");" );
-	eval("app."+verbs[m].method+"('"+verbs[m].route+"', "+moduleName+"."+verbs[m].action+");");
+	console.log( "\tLoading verbs ... app."+verbs[m].method+"('"+verbs[m].route+"', "+pluginName+"."+verbs[m].action+");" );
+	eval("app."+verbs[m].method+"('"+verbs[m].route+"', "+pluginName+"."+verbs[m].action+");");
 }
 
 /* Loading custom plugins 

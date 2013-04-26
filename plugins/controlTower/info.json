@@ -1,9 +1,12 @@
 {
 "name":"controlTower"
 ,"version":"0.0.1"
-,"view":"controlTower/v"
+,"directory":"controlTower"
 ,"verbs":{
 	"index":{"method":"get", 	"route":"/controlTower",	"action":"index"}
 	,"settings":{"method":"get", 	"route":"/controlTower/settings",	"action":"settings"}
+	,"addons":{"method":"get",	"route":"/controlTower/addons",	"action":"addons"}
+	,"addonForm":{"method":"get",	"route":"/controlTower/addonForm",	"action":"addonForm"}
+	,"createAddon":{"method":"post",	"route":"/controlTower/addonForm",	"action":"createAddon"}
 	}
 }
