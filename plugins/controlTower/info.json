@@ -1,0 +1,9 @@
+{
+"name":"controlTower"
+,"version":"0.0.1"
+,"view":"controlTower/v"
+,"verbs":{
+	"index":{"method":"get", 	"route":"/controlTower",	"action":"index"}
+	,"settings":{"method":"get", 	"route":"/controlTower/settings",	"action":"settings"}
+	}
+}

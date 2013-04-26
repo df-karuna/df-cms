@@ -1,17 +1,16 @@
 {
-  "name": "application-name",
-  "version": "0.0.1",
+  "name": "CMS Project name DesertFox",
+  "version": "0.0.2",
   "private": true,
   "scripts": {
-    "start": "node app"
-  },
-  "dependencies": {
-    "express": "3.1.0",
-    "mongoose": "3.6.4",
-    "jade": "*"
+    "start": "node app.js"
   },
   "engine": {
     "node": "0.8.x",
     "npm" : "1.1.x"
+  },
+  "dependencies": {
+    "express": "3.2.0",
+    "jade": "*"
   }
 }
