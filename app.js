@@ -21,10 +21,13 @@ app.set('views', __dirname + '/plugins');
 app.set('view engine', 'jade');
 app.use(express.favicon());
 app.use(express.logger('dev'));
-app.use(express.bodyParser());
+app.use(express.bodyParser({
+    uploadDir:  __dirname+'/tmp'
+  }));
+app.use( require('connect').bodyParser());
 app.use(express.methodOverride());
-  app.use(express.cookieParser('your secret here'));
-  app.use(express.session());
+app.use(express.cookieParser('your secret here'));
+app.use(express.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -47,9 +50,16 @@ eval("var "+pluginName+" = require('"+pluginDir+"/"+ (pluginInfo['controller']||
 
 var verbs = pluginInfo['verbs'];
 for(m in verbs){
+	console.log( "Loading methods ... " +pluginName+'.'+verbs[m].action+'(app);');
+	eval(pluginName+'.'+verbs[m].action+'(app);');
+}
+
+/*
+var verbs = pluginInfo['verbs'];
+for(m in verbs){
 	console.log( "\tLoading verbs ... app."+verbs[m].method+"('"+verbs[m].route+"', "+pluginName+"."+verbs[m].action+");" );
 	eval("app."+verbs[m].method+"('"+verbs[m].route+"', "+pluginName+"."+verbs[m].action+");");
-}
+}*/
 
 /* Loading custom plugins 
  * 1. Load custom plugin information from DB 

@@ -1,6 +1,6 @@
 {
 "name":"controlTower"
-,"version":"0.0.1"
+,"version":"0.0.2"
 ,"directory":"controlTower"
 ,"verbs":{
 	"index":{"method":"get", 	"route":"/controlTower",	"action":"index"}
