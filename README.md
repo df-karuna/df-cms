@@ -1,4 +1,4 @@
-eQpress
+df-cms
 =======
 
-express by Q
+RESTful MVC CMS by Q
