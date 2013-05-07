@@ -1,0 +1,12 @@
+{
+"name":"testPlugin"
+,"version":"0.0.1"
+,"directory":"testPlugin"
+,"verbs":{
+	"index":{"method":"get", 	"route":"/testPlugin",	"action":"index"}
+	,"settings":{"method":"get", 	"route":"/testPlugin/settings",	"action":"settings"}
+	,"addons":{"method":"get",	"route":"/testPlugin/addons",	"action":"addons"}
+	,"addonForm":{"method":"get",	"route":"/testPlugin/addonForm",	"action":"addonForm"}
+	,"createAddon":{"method":"post",	"route":"/testPlugin/addonForm",	"action":"createAddon"}
+	}
+}

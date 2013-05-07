@@ -3,6 +3,9 @@ extends ../layout
 block content
 	h1 Control tower addons list.
 	div
+		input(type='button', value='추가', onclick='location.href="/controlTower/addonForm";')
 		ul
-			li addon1
-			li addon2
+			if addons.length == 0
+				li No addons
+			each addon in addons
+				li= addon.name

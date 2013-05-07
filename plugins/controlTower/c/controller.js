@@ -8,7 +8,9 @@ exports.index = function(req, res){
   res.render('index', { title: 'Express' });
 };
 */
-var fs = require('fs');
+var fs = require('fs')
+	, mongoose = require('mongoose')
+	, model = require('../m/plugin');
 var pluginInfo = JSON.parse( fs.readFileSync('./plugins/controlTower/info.json', 'utf8') );
 
 
@@ -33,14 +35,18 @@ exports.settings = function(app){
 }
 exports.addons = function(app){
 	app.get(verbs.addons.route, function(req, res){
-		res.render(view+'/addons');
-		console.log(view+'/addons');
+		model.findAll(function(err, docs){
+			//console.log(docs);
+			res.render(view+'/addons', {addons:docs});
+			console.log(view+'/addons');
+		});
 	});
 }
 exports.addonForm = function(app){
 	app.get(verbs.addonForm.route, function(req, res){
-		res.send('<html><body><form method="post" action="./addonForm" enctype="multipart/form-data"><input type="file" name="file"><input type="submit" value="전송"/></form></body></html>');
-		console.log(view+'/addonForm');
+		//res.send('<html><body><form method="post" action="./addonForm" enctype="multipart/form-data"><input type="file" name="file"><input type="submit" value="전송"/></form></body></html>');
+		res.render(view+'/addons/addonForm');
+		console.log(view+'/addons/addonForm');
 	});
 }
 exports.createAddon = function(app){
@@ -49,23 +55,29 @@ exports.createAddon = function(app){
 		var files = req.files,
 			 fileUtil = require('../../utils/file'),
 			 AdmZip = require('adm-zip');
-		
-		var res;
 
 		for(file in files){
 			console.log(files[file]);
-			if( fileUtil.moveFile(files[file], 'e:\\node\\df_cms\\plugins') != true)
+			if(files[file].name.indexOf('.zip') == -1){
+				res.end('<script type="text/javascript">alert("Only can be uploaded *.zip"); history.back();</script>' + files[file]);
+				fileUtil.delFile(files[file].path);
+				return;
+			}
+
+			if( fileUtil.moveFile(files[file], 'e:\\node\\df_cms\\plugins') != true){
 				res.end('Faild while moving file : ' + files[file]);
-			else{
+				return;
+			}else{
 				zip = new AdmZip('e:\\node\\df_cms\\plugins\\' + files[file].name);
 				zip.extractAllTo('e:\\node\\df_cms\\plugins\\'+files[file].name.replace('.zip', ''));
 				fileUtil.delFile('e:\\node\\df_cms\\plugins\\' + files[file].name);
 			}
-
+			model.savePlugin(files[file].name.replace('.zip', ''));
 		}
 		res.end('Done!');
 	});
 }
+
 
 /*V.0.0.1*/
 /*

@@ -1,5 +1,9 @@
 extends ../layout
 
 block content
-	h1 Control tower addon form
+	h1 ControlTower Addon form
 	div
+		form(method='post', action='./addonForm', enctype='multipart/form-data')
+			input(type='file', name='plugin')
+			input(type='submit', value='전송')
+			input(type='button', value='취소', onclick='history.back();')
