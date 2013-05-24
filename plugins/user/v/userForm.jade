@@ -1,0 +1,50 @@
+extends ../../../views/layout
+block content
+	form(method='post',action='#{action}')
+		fieldset(name='necessary')
+			legend 필수입력사항
+			dl.userForm
+				dt 아이디
+				dd
+					input(type='text',name='id',required)
+					input(type='button',value='중복확인')
+				dt 패스워드
+				dd
+					input(type='password',name='password',required)
+				dt 패스워드 확인
+				dd
+					input(type='password',name='chkPassword',required)
+				dt 이름
+				dd
+					input(type='text',name='name',required)
+				dt 기수
+				dd
+					select(name='gisu',required)
+						- for(var i = 1; i <= currNum; i++)
+							option(value='#{i}') #{i}기
+						option(value='-1') 손님
+				dt 이메일
+				dd
+				input(type='text',name='email',required)
+				dt 전화번호
+				dd
+					input(type='text',name='tel1',required)
+					-
+					input(type='text',name='tel2',required)
+					-
+					input(type='text',name='tel3',required)
+		fieldset(name='optional')
+			legend 선택입력사항
+			dl.userForm
+				dt 주소
+				dd
+					input.inpAddr(type='text',name='address')
+		div
+			span MT, 세미나 등 행사관련 소식을 전화/이메일/우편으로 수신하시겠습니까?
+			input#receptY(type='radio',name='reception',value='y')
+			label(for='receptY') 예
+			input#receptN(type='radio',name='reception',value='n')
+			label(for='receptN') 아니오
+		div
+			input(type='submit',value='#{submitVal}')
+			input(type='button',onclick='history.back();',value='뒤로가기')

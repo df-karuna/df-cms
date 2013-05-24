@@ -1,0 +1,11 @@
+{
+"name":"user"
+,"version":"0.0.1"
+,"directory":"user"
+,"verbs":{
+	"addUserForm":{"method":"get", 	"route":"/userForm",	"action":"addUserForm"}
+	,"addUser":{"method":"post", 	"route":"/userForm",	"action":"addUser"}
+	,"loginForm":{"method":"get",	"route":"/login", "action":"loginForm"}
+	,"loginAction":{"method":"post", "route":"/login", "action":"loginAction"}
+	}
+}

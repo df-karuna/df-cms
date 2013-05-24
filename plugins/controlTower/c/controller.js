@@ -78,6 +78,36 @@ exports.createAddon = function(app){
 	});
 }
 
+exports.loadAllModules = function(app){
+
+	var fs = require('fs');
+	
+	model.loadAllModules(function(err, docs) {
+		if (err)
+		{
+			return;
+		}
+		
+		pluginBaseDir = './plugins/';
+		for(plugin in docs){
+			var pluginInfo = JSON.parse( fs.readFileSync(pluginBaseDir+docs[plugin].name+'/info.json', 'utf8') );
+
+			var pluginName = pluginInfo['name'];
+			var pluginDir = pluginBaseDir + pluginInfo['directory'];
+			console.log(  "Loading plugin ... "+pluginName+" = require('"+pluginDir+"/"+ (pluginInfo['controller']||"c/controller")+"');" );
+					eval("var "+pluginName+" = require('../../"+pluginInfo['directory']+"/"+ (pluginInfo['controller']||"c/controller")+"');");
+					console.log(" Done");
+
+			var verbs = pluginInfo['verbs'];
+			for(m in verbs){
+				console.log( "Loading methods ... " +pluginName+'.'+verbs[m].action+'(app);');
+				eval(pluginName+'.'+verbs[m].action+'(app);');
+				console.log(" Done");
+			}
+		}
+	});
+}
+
 
 /*V.0.0.1*/
 /*

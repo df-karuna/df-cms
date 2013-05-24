@@ -1,0 +1,13 @@
+extends ../../../views/layout
+
+block content
+	form(method='post',action='/login')
+		dl.login-area
+			dt 아이디
+			dd
+				input(type='text',name='id',required)
+			dt 패스워드
+			dd
+				input(type='password',name='password',required)
+		div.btn-area
+			input(type='submit',value='로그인')

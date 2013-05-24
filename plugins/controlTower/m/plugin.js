@@ -27,7 +27,7 @@ exports.savePlugin = function(pluginPath){
 	}
 }
 
-exports.loadAllModules = function(app){
+/*exports.loadAllModules = function(app){
 
 	var fs = require('fs');
 	
@@ -56,4 +56,10 @@ exports.loadAllModules = function(app){
 			}
 		}
 	});
+}*/
+
+exports.loadAllModules = function(cb){
+	PluginScm.find({})
+						.exec(cb);
+
 }

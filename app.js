@@ -5,7 +5,6 @@
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
   , mongoose = require('mongoose')
@@ -40,7 +39,25 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/users', user.list);
+
+/*app.get('/tempUserForm', function(req, res){
+		var currNum = new Date().getFullYear()-1988 +1;
+		var data = {};
+
+		data.submitVal = '가입하기';
+		data.title= 'title';
+		data.currNum = currNum;
+		data.action = '/';
+
+		res.render(__dirname+'/plugins/user/v/userForm', data);
+	});*/
+
+app.get('/resTester', function(req, res){
+	var msg = require('./plugins/utils/message');
+
+	msg.showMessage(res, 'test', '/');
+	res.end();
+	});
 
 //db connect
 mongoose.connect(configure.db);
@@ -77,7 +94,7 @@ for(m in verbs){
  * 3. Load methods, ex) somePlugin.method(app);
  * 4. Again 1 to 3 until all plugins loaded.
  */
-require('./plugins/controlTower/m/plugin').loadAllModules(app);
+require('./plugins/controlTower/c/controller').loadAllModules(app);
 //console.log(allPlugins);
 
 /* Loading custom plugins is Done */
